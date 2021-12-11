@@ -1,33 +1,32 @@
 import React from 'react';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, ActivityIndicator} from 'react-native';
 import { useEffect } from 'react';
 import movieDB from '../api/movieDB';
 import { MovieDBNowPlaying } from '../interfaces/movieInterface';
+import useMovies from '../hooks/useMovies';
 
 const HomeScreen = () => {
   const navigator = useNavigation();
 
-  useEffect(() => {
-      const getMovies = async() => {
-        try{
-            const resp = await movieDB.get<MovieDBNowPlaying>('/now_playing')
-            console.log(resp.data.results[0].title)
-        }catch(error){
-            console.log(error, 'Something went wrong')
-        }
-     
+
+ const {moviesNow, isLoading} = useMovies()
 
 
-      }
-      getMovies()
+ if(isLoading) {
+     return (
+         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+             <ActivityIndicator color='black' size={100}/>
+         </View>
+     )
+
+ }
 
 
          
          
 
-  }, [])
 
   return (
     <View>
@@ -39,6 +38,14 @@ const HomeScreen = () => {
           navigator.dispatch(CommonActions.navigate({name: 'Details'}))
         }
       />
+
+    
+
+      {
+          moviesNow?.map(movie => (
+              <Text key={movie.id}>{movie.title}</Text>
+          ))
+      }
     </View>
   );
 };

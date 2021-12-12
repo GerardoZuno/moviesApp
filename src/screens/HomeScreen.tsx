@@ -6,9 +6,13 @@ import { useEffect } from 'react';
 import movieDB from '../api/movieDB';
 import { MovieDBNowPlaying } from '../interfaces/movieInterface';
 import useMovies from '../hooks/useMovies';
+import MoviePoster from '../components/MoviePoster';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const HomeScreen = () => {
   const navigator = useNavigation();
+
+  const {top} = useSafeAreaInsets()
 
 
  const {moviesNow, isLoading} = useMovies()
@@ -21,17 +25,13 @@ const HomeScreen = () => {
          </View>
      )
 
- }
-
-
-         
-         
+ }    
 
 
   return (
-    <View>
-      <Text>Home</Text>
-
+    <View style={{marginTop: top + 20}}>
+       <MoviePoster
+       movie={moviesNow[4]}/>
       <Button
         title="Detalles"
         onPress={() =>

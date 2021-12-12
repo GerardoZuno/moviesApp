@@ -11,7 +11,7 @@ export const MyStack = () => {
     screenOptions={{
         headerShown: false,
         cardStyle:{
-            backgroundColor: 'red'
+            backgroundColor: 'white'
         }
 
     }}

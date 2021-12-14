@@ -2,13 +2,20 @@ import React from 'react';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import Carousel from 'react-native-snap-carousel';
 
-import {View, Text, Button, ActivityIndicator, Dimensions} from 'react-native';
-import {useEffect} from 'react';
-import movieDB from '../api/movieDB';
-import {MovieDBNowPlaying} from '../interfaces/movieInterface';
+import {
+  View,
+  Text,
+  Button,
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+} from 'react-native';
+import {MovieDBMoviesResponse} from '../interfaces/movieInterface';
 import useMovies from '../hooks/useMovies';
 import MoviePoster from '../components/MoviePoster';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {ScrollView} from 'react-native-gesture-handler';
+import HorizontalSlider from '../components/HorizontalSlider';
 
 const {width: windowWidth} = Dimensions.get('window');
 
@@ -17,7 +24,7 @@ const HomeScreen = () => {
 
   const {top} = useSafeAreaInsets();
 
-  const {moviesNow, isLoading} = useMovies();
+  const {nowPlaying, popular, upcoming, topRated, isLoading} = useMovies();
 
   if (isLoading) {
     return (
@@ -28,8 +35,9 @@ const HomeScreen = () => {
   }
 
   return (
-    <View style={{marginTop: top + 20}}>
-      {/*
+    <ScrollView>
+      <View style={{marginTop: top + 20}}>
+        {/*
       <Button
         title="Detalles"
         onPress={() =>
@@ -45,18 +53,26 @@ const HomeScreen = () => {
           ))
       } */}
 
-      <View style={{
-          height: 440,
-          
-      }}>
-        <Carousel
-          data={moviesNow}
-          renderItem={({item}: any) => <MoviePoster movie={item} />}
-          sliderWidth={windowWidth}
-          itemWidth={300}
-        />
+        <View
+          style={{
+            height: 440,
+          }}>
+          <Carousel
+            data={nowPlaying}
+            renderItem={({item}: any) => <MoviePoster movie={item} />}
+            sliderWidth={windowWidth}
+            itemWidth={300}
+            inactiveSlideOpacity={0.9}
+          />
+        </View>
+        
+        <HorizontalSlider title='Populares' movies={popular}/>
+        <HorizontalSlider title='Proximamente' movies={upcoming}/>
+        <HorizontalSlider title='Top Rated' movies={topRated}/>
+
+
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

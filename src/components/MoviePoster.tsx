@@ -24,7 +24,9 @@ const MoviePoster = ( {movie, width = 300, height = 420}: Props) => {
       style={{
         width,
         height,
-        marginHorizontal: 10,
+        marginHorizontal: 5,
+        paddingBottom: 20,
+        paddingHorizontal: 7,
       }}>
       <View style={styles.imageContainer}>
         <Image

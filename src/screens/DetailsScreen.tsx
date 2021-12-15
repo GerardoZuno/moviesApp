@@ -19,9 +19,9 @@ const DetailsScreen = ({route}: Props) => {
   /*Forma rapida no ideal
     const movie = route.params as Movie*/
 
-   const {state} = useMovieDetails(movie.id)
+   const {cast, isLoading, movieFull} = useMovieDetails(movie.id)
 
-  console.log(movie.id);
+  console.log({movieFull});
   return (
     <ScrollView>
       <View style={styles.imageContainer}>

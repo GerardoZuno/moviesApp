@@ -1,11 +1,12 @@
 import {StackScreenProps} from '@react-navigation/stack/lib/typescript/src/types';
 import React from 'react';
-import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
+import {View, Text, Image, StyleSheet, Dimensions, ActivityIndicator} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Movie} from '../interfaces/movieInterface';
 import {RootStackParams} from '../navigation/Navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import useMovieDetails from '../hooks/useMovieDetails';
+import MovieDetails from '../components/MovieDetails';
 
 const screenHeight = Dimensions.get('screen').height;
 
@@ -39,15 +40,14 @@ const DetailsScreen = ({route}: Props) => {
         <Text style={styles.subtitle}>{movie.original_title}</Text>
         <Text style={styles.title}>{movie.title}</Text>
       </View>
-      <View style={styles.marginContainer}>
-      <Icon
-       name='star-outline'
-       size={30}
-       color="black"
-        />
+      
+        {
+            isLoading ? (
+                <ActivityIndicator size={40} style={{marginTop: 20}}/>
 
-{/* <ion-icon name=""></ion-icon> */}
-      </View>
+            ): <MovieDetails movieFull={movieFull!} cast={cast}/>
+        }
+
     </ScrollView>
   );
 };

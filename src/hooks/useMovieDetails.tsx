@@ -5,7 +5,7 @@ import { Cast, CreditsResponse } from "../interfaces/creditsInterface"
 import { MovieFull } from "../interfaces/movieInterface"
 
 interface MovieDetails {
-    cast: Cast[],
+    cast?: Cast[],
     isLoading: boolean,
     movieFull?: MovieFull
 }

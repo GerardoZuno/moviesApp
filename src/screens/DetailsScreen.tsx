@@ -57,6 +57,8 @@ export default DetailsScreen;
 const styles = StyleSheet.create({
   imageContainer: {
     width: '100%',
+    borderBottomEndRadius: 25,
+    borderBottomStartRadius: 25,
     height: screenHeight * 0.7,
     shadowColor: '#000',
     shadowOffset: {
@@ -64,9 +66,8 @@ const styles = StyleSheet.create({
       height: 2,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    borderBottomEndRadius: 25,
-    borderBottomStartRadius: 25,
+    shadowRadius: 1.84,
+   
     elevation: 5,
   },
   imageBorder: {

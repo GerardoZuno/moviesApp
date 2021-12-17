@@ -4,6 +4,8 @@ import {Cast} from '../interfaces/creditsInterface';
 import {MovieFull} from '../interfaces/movieInterface';
 import currencyFormatter from 'currency-formatter'
 import Icon from 'react-native-vector-icons/Ionicons';
+import CastItem from './CastItem';
+import { FlatList } from 'react-native-gesture-handler';
 
 interface Props {
   movieFull: MovieFull;
@@ -40,6 +42,15 @@ const MovieDetails = ({movieFull, cast}: Props) => {
       </View>
 
       {/* Casting */}
+      <Text style={{marginHorizontal: 20, color: 'black', fontSize: 23, fontWeight: 'bold'}}>
+                Actores        
+       </Text>
+        <FlatList
+        data={cast}
+        keyExtractor={ (item) => item.id.toString()}
+        renderItem={({item}) => <CastItem actor={item}/> }
+        horizontal
+        showsHorizontalScrollIndicator={false} />
     </>
   );
 };

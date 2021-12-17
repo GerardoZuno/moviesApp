@@ -16,6 +16,7 @@ import MoviePoster from '../components/MoviePoster';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {ScrollView} from 'react-native-gesture-handler';
 import HorizontalSlider from '../components/HorizontalSlider';
+import GradientBG from '../components/GradientBG';
 
 const {width: windowWidth} = Dimensions.get('window');
 
@@ -35,6 +36,8 @@ const HomeScreen = () => {
   }
 
   return (
+    <GradientBG>
+
     <ScrollView>
       <View style={{marginTop: top + 20}}>
         {/*
@@ -73,6 +76,8 @@ const HomeScreen = () => {
 
       </View>
     </ScrollView>
+    </GradientBG>
+
   );
 };
 

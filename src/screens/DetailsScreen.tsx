@@ -1,7 +1,17 @@
 import {StackScreenProps} from '@react-navigation/stack/lib/typescript/src/types';
 import React from 'react';
-import {View, Text, Image, StyleSheet, Dimensions, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
+import {CommonActions, useNavigation} from '@react-navigation/native';
+
 import {Movie} from '../interfaces/movieInterface';
 import {RootStackParams} from '../navigation/Navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -11,8 +21,10 @@ import MovieDetails from '../components/MovieDetails';
 const screenHeight = Dimensions.get('screen').height;
 
 interface Props extends StackScreenProps<RootStackParams, 'DetailsScreen'> {}
- 
+
 const DetailsScreen = ({route}: Props) => {
+  const navigator = useNavigation();
+
   const movie = route.params;
 
   const uri = `https://image.tmdb.org/t/p/w500${movie?.poster_path}`;
@@ -20,12 +32,20 @@ const DetailsScreen = ({route}: Props) => {
   /*Forma rapida no ideal
     const movie = route.params as Movie*/
 
-   const {cast, isLoading, movieFull} = useMovieDetails(movie.id)
+  const {cast, isLoading, movieFull} = useMovieDetails(movie.id);
 
   console.log({movieFull});
   return (
     <ScrollView>
       <View style={styles.imageContainer}>
+        <TouchableOpacity
+          style={styles.backBotton}
+          onPress={() =>
+            navigator.dispatch(CommonActions.navigate({name: 'HomeScreen'}))
+          }>
+          <Icon color="white" name="arrow-back-outline" size={60} />
+        </TouchableOpacity>
+
         <View style={styles.imageBorder}>
           <Image
             source={{
@@ -40,14 +60,12 @@ const DetailsScreen = ({route}: Props) => {
         <Text style={styles.subtitle}>{movie.original_title}</Text>
         <Text style={styles.title}>{movie.title}</Text>
       </View>
-      
-        {
-            isLoading ? (
-                <ActivityIndicator size={40} style={{marginTop: 20}}/>
 
-            ): <MovieDetails movieFull={movieFull!} cast={cast}/>
-        }
-
+      {isLoading ? (
+        <ActivityIndicator size={40} style={{marginTop: 20}} />
+      ) : (
+        <MovieDetails movieFull={movieFull!} cast={cast} />
+      )}
     </ScrollView>
   );
 };
@@ -67,7 +85,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 1.84,
-   
+
     elevation: 5,
   },
   imageBorder: {
@@ -78,6 +96,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
+    zIndex: 1,
   },
   marginContainer: {
     marginTop: 20,
@@ -91,5 +110,11 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     color: 'gray',
+  },
+  backBotton: {
+    position: 'absolute',
+    top: 10,
+    left: 5,
+    zIndex: 2,
   },
 });

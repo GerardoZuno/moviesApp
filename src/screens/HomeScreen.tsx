@@ -18,6 +18,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import HorizontalSlider from '../components/HorizontalSlider';
 import GradientBG from '../components/GradientBG';
 import ImageColors from 'react-native-image-colors'
+import { getImageColors } from '../helpers/getColors';
 
 const {width: windowWidth} = Dimensions.get('window');
 
@@ -34,10 +35,10 @@ const HomeScreen = () => {
     const uri = `https://image.tmdb.org/t/p/w500${movie?.poster_path}`;
 
 
-    const result = await ImageColors.getColors(uri, {})
 
-    console.log(uri);
-    console.log(result)
+    const [primary, secondary] = await getImageColors(uri)
+
+    console.log({primary, secondary})
   };
 
   if (isLoading) {

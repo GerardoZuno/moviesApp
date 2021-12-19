@@ -19,6 +19,8 @@ import HorizontalSlider from '../components/HorizontalSlider';
 import GradientBG from '../components/GradientBG';
 import ImageColors from 'react-native-image-colors'
 import { getImageColors } from '../helpers/getColors';
+import { useContext } from 'react';
+import { GradientContext } from '../Context/GradientContext';
 
 const {width: windowWidth} = Dimensions.get('window');
 
@@ -26,6 +28,7 @@ const HomeScreen = () => {
   const navigator = useNavigation();
 
   const {top} = useSafeAreaInsets();
+  const {setMainColors} = useContext(GradientContext)
 
   const {nowPlaying, popular, upcoming, topRated, isLoading} = useMovies();
 
@@ -36,9 +39,9 @@ const HomeScreen = () => {
 
 
 
-    const [primary, secondary] = await getImageColors(uri)
+    const [primary = 'green', secondary = 'orange'] = await getImageColors(uri)
 
-    console.log({primary, secondary})
+    setMainColors({primary, secondary})
   };
 
   if (isLoading) {

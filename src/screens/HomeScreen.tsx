@@ -21,6 +21,7 @@ import ImageColors from 'react-native-image-colors'
 import { getImageColors } from '../helpers/getColors';
 import { useContext } from 'react';
 import { GradientContext } from '../Context/GradientContext';
+import { useEffect } from 'react';
 
 const {width: windowWidth} = Dimensions.get('window');
 
@@ -43,6 +44,12 @@ const HomeScreen = () => {
 
     setMainColors({primary, secondary})
   };
+
+  useEffect(() => {
+     if(nowPlaying.length > 0) {
+         getPosterColors(0)
+     } 
+  }, [nowPlaying])
 
   if (isLoading) {
     return (

@@ -2,23 +2,23 @@ import { useRef } from "react"
 import { Animated } from "react-native"
 
 const useFade = () => {
-    const refOpacity = useRef(new Animated.Value(0)).current
+    const opacity = useRef(new Animated.Value(0)).current
     
-    const fadeIn = () => {
+    const fadeIn = (callback?: Function ) => {
         Animated.timing(
-            refOpacity,
+            opacity,
             {
                 toValue: 1,
-                duration: 800,
+                duration: 1000,
                 useNativeDriver: true,
             }
-        ).start()
+        ).start( () =>callback ? callback() : null )
     }
 
      
     const fadeOut = () => {
         Animated.timing(
-            refOpacity,
+            opacity,
             {
                 toValue: 0,
                 duration: 800,
@@ -27,7 +27,7 @@ const useFade = () => {
         ).start()
     }
     return {
-        refOpacity, fadeIn, fadeOut
+        opacity, fadeIn, fadeOut
     }
 }
 
